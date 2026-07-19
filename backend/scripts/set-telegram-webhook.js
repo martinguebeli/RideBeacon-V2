@@ -6,6 +6,8 @@
 //   BASE_URL=https://ridebeacon-backend.onrender.com \
 //   node scripts/set-telegram-webhook.js
 
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
+
 const token = process.env.TELEGRAM_BOT_TOKEN;
 const secret = process.env.TELEGRAM_WEBHOOK_SECRET;
 const baseUrl = process.env.BASE_URL;
