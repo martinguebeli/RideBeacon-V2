@@ -1,11 +1,11 @@
 # RideBeacon V2 — Kanäle produktiv testen
 
-Backend-URL: `https://ridebeacon-backend.onrender.com` (Render, Auto-Deploy von `main`).
+Backend-URL: `https://ridebeacon-backend-kknw.onrender.com` (Render, Auto-Deploy von `main`).
 
 ## Grund-Smoke-Test
 
 ```bash
-BASE=https://ridebeacon-backend.onrender.com
+BASE=https://ridebeacon-backend-kknw.onrender.com
 curl $BASE/health                                    # → { status: ok, version: 3.0.0 }
 curl -X POST $BASE/api/device/register -H 'Content-Type: application/json' \
   -d '{"deviceId":"test-device-1"}'
@@ -46,7 +46,7 @@ beantragen und das Spend-Limit erhöhen.
    ```bash
    cd backend
    TELEGRAM_BOT_TOKEN=... TELEGRAM_WEBHOOK_SECRET=... \
-   BASE_URL=https://ridebeacon-backend.onrender.com \
+   BASE_URL=https://ridebeacon-backend-kknw.onrender.com \
    node scripts/set-telegram-webhook.js
    ```
 4. Testen: Setup-Seite → „Telegram" → Bot öffnet sich → Start →
