@@ -4,7 +4,10 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const db = require('../db');
 
 // POST /api/checkout/session
-// Creates a Stripe checkout session for $12/year
+// Creates a Stripe checkout session for the yearly subscription.
+// STRIPE_PRICE_ID must point at a recurring yearly Price in the Stripe
+// dashboard — the subscription applies regardless of which channel(s) the
+// device ends up using, so there's nothing channel-specific here.
 router.post('/session', async (req, res) => {
   const { deviceId } = req.body;
   if (!deviceId) return res.status(400).json({ error: 'Missing deviceId' });
@@ -51,9 +54,9 @@ router.get('/success', async (req, res) => {
       <div class="box">
         <div class="check">✅</div>
         <h1>Payment successful!</h1>
-        <p>Your RideBeacon license is now active for 1 year.<br>
+        <p>Your RideBeacon subscription is now active.<br>
            Return to the RideBeacon app on your Karoo —<br>
-           your license is applied automatically.</p>
+           it's applied automatically, and you can use any channel.</p>
       </div>
     </body>
     </html>
