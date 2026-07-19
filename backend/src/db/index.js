@@ -36,6 +36,25 @@ async function init() {
       created_at               TIMESTAMPTZ DEFAULT NOW()
     );
   `);
+  // Migrate a pre-multichannel (V1) devices table in place — CREATE TABLE IF
+  // NOT EXISTS above is a no-op when the table already exists, so the new
+  // columns have to be added explicitly.
+  await pool.query(`
+    ALTER TABLE devices
+      ADD COLUMN IF NOT EXISTS trial_channel          TEXT,
+      ADD COLUMN IF NOT EXISTS trial_started_at       TIMESTAMPTZ,
+      ADD COLUMN IF NOT EXISTS phone_number           TEXT,
+      ADD COLUMN IF NOT EXISTS telegram_chat_id       TEXT,
+      ADD COLUMN IF NOT EXISTS whatsapp_number        TEXT,
+      ADD COLUMN IF NOT EXISTS whatsapp_consent_at    TIMESTAMPTZ,
+      ADD COLUMN IF NOT EXISTS preferred_channel      TEXT,
+      ADD COLUMN IF NOT EXISTS stripe_customer_id     TEXT,
+      ADD COLUMN IF NOT EXISTS stripe_subscription_id TEXT,
+      ADD COLUMN IF NOT EXISTS subscription_status    TEXT,
+      ADD COLUMN IF NOT EXISTS current_period_end     TIMESTAMPTZ,
+      ADD COLUMN IF NOT EXISTS license_key            TEXT,
+      ADD COLUMN IF NOT EXISTS licensed_until         TIMESTAMPTZ;
+  `);
   console.log('Database ready');
 }
 
