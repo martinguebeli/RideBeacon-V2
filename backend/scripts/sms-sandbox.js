@@ -8,6 +8,7 @@
 //   node scripts/sms-sandbox.js verify +41791234567 123456
 //   node scripts/sms-sandbox.js send +41791234567 "Test from RideBeacon"
 
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const {
   SNSClient,
   GetSMSSandboxAccountStatusCommand,
