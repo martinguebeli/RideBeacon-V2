@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
 const SECRET = process.env.LICENSE_SECRET;
-const TRIAL_LIMIT = 5;
+const TRIAL_DAYS = 7; // free trial period, same length for SMS, WhatsApp, and Telegram
 
 // Generate a license key tied to a specific device
 function generateLicenseKey(deviceId, expiryDate) {
@@ -28,4 +28,4 @@ function verifyLicenseKey(deviceId, licenseKey) {
   }
 }
 
-module.exports = { generateLicenseKey, verifyLicenseKey, TRIAL_LIMIT };
+module.exports = { generateLicenseKey, verifyLicenseKey, TRIAL_DAYS };
