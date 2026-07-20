@@ -13,7 +13,27 @@ const API_URL = `https://graph.facebook.com/${GRAPH_API_VERSION}/${PHONE_NUMBER_
 //   Template "ride_notification": "{{1}}"
 // The verified WhatsApp Business display name ("RideBeacon") is what shows
 // as the sender — configured once in Meta Business Manager, not per-message.
+//
+// WHATSAPP_FREETEXT=1 switches to plain-text sends instead. Only works
+// inside the 24h customer-service window (recipient messaged us first) —
+// meant for testing while the template is still pending approval.
 async function send(identifier, message) {
+  const payload = process.env.WHATSAPP_FREETEXT === '1'
+    ? { type: 'text', text: { body: message } }
+    : {
+        type: 'template',
+        template: {
+          name: TEMPLATE_NAME,
+          language: { code: TEMPLATE_LANG },
+          components: [
+            {
+              type: 'body',
+              parameters: [{ type: 'text', text: message }],
+            },
+          ],
+        },
+      };
+
   const res = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -23,17 +43,7 @@ async function send(identifier, message) {
     body: JSON.stringify({
       messaging_product: 'whatsapp',
       to: identifier, // E.164 phone number, no leading +
-      type: 'template',
-      template: {
-        name: TEMPLATE_NAME,
-        language: { code: TEMPLATE_LANG },
-        components: [
-          {
-            type: 'body',
-            parameters: [{ type: 'text', text: message }],
-          },
-        ],
-      },
+      ...payload,
     }),
   });
 
