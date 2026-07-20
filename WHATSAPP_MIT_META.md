@@ -2,7 +2,52 @@
 
 Stand: 20.07.2026. Der WhatsApp-Kanal ist **end-to-end getestet** (Freitext im
 24h-Fenster an +41 79 404 18 81 zugestellt). Es fehlen nur noch Schritte für
-den öffentlichen Launch — siehe Checkliste unten.
+den öffentlichen Launch — siehe Fahrplan und Checkliste unten.
+
+## Launch-Fahrplan (Reihenfolge)
+
+Ziel: SMS + Telegram + WhatsApp ab Start anbieten, ~250 WhatsApp-Nutzer/Tag.
+
+| Schritt | Wann | Blockiert Launch? |
+|---|---|---|
+| Frische Absendernummer besorgen + registrieren | vor Launch | ja (für echte WhatsApp-Nutzer) |
+| Display-Name „RideBeacon" freigeben lassen | vor/kurz nach Launch | nein |
+| Template abwarten (`ride_notification`) | läuft | nein (Freitext-Modus testet weiter) |
+| Permanenten Token (2FA aktivieren!) | vor Launch | ja (Token läuft sonst ab) |
+| Einzelfirma + Business-Verifizierung | wenn nahe an 250/Tag | nein |
+
+### Absendernummer verstehen
+
+- Die Testnummer (+1 555-146-4189) sendet nur an die 5 eingetragenen Testnummern
+  — nutzlos für echte Kunden. Du brauchst eine eigene Nummer im WABA.
+- Muss eine **frische Nummer** sein: aktuell KEIN WhatsApp-Konto darauf (weder
+  normale noch Business-App). Falls doch, das Konto vorher in der App löschen.
+- **Nicht deine private Nummer** — sobald sie in der Cloud API registriert ist,
+  gehört sie der API und kann nicht mehr parallel als normales WhatsApp laufen.
+  Empfehlung: günstige Prepaid-SIM / Zweitnummer.
+- Registrierung = einmaliger SMS/Anruf-Code (Besitznachweis, keine „Verifizierung").
+- Kostenlos beim Hinzufügen; Meta rechnet pro Konversation ab (bei niedrigem
+  Volumen günstig). Diese EINE Nummer bedient zentral alle Nutzer.
+- Empfänger sehen anfangs die Nummer, nach Display-Name-Freigabe „RideBeacon".
+
+### Die 250/Tag richtig einordnen
+
+- Für ~250 Nutzer/Tag zum Start braucht es KEINE Business-Verifizierung — nur
+  echte Absendernummer + freigegebenes Template. Damit sendest du an beliebige
+  (zustimmende) Nutzer bis 250 business-initiierte Gespräche pro 24 h.
+- Verifizierung hebt das Limit erst darüber an (250 → 1k → 10k → unbegrenzt).
+  Also: erst launchen, dann verifizieren, wenn man an die Grenze stößt.
+
+### Einfachster Weg zur Verifizierung (wenn nötig)
+
+- Meta will Name + Adresse + ein offizielles Dokument. Schweizer Solo-Weg:
+  **Einzelunternehmen freiwillig ins Handelsregister eintragen** (~120 CHF,
+  online, wenige Tage) → Handelsregisterauszug + UID = akzeptierte Dokumente.
+- Die App-Webseite (Domain + geschäftliche E-Mail) hilft bei der Gegenprüfung.
+- Hinweis: Da bereits Stripe-Abos eingenommen werden, ist geschäftliche
+  Tätigkeit ohnehin gegeben — Einzelfirma legitimiert das Bezahlprodukt
+  generell, Verifizierung fällt als Nebenprodukt ab. (Keine Rechts-/Steuer-
+  beratung — Schweizer Details mit Kanton/Treuhänder gegenchecken.)
 
 ## Setup-Überblick
 
